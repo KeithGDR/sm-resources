@@ -1,0 +1,341 @@
+{
+	"for loop": {
+		"prefix": "for",
+		"body": [
+			"for (int ${1|i,client|} = ${2:1}; $1 <= ${3:MaxClients}; $1++) {",
+			"\t",
+			"}"
+		],
+		"description": "for loop"
+	},
+
+	"while loop": {
+		"prefix": "while",
+		"body": [
+			"while () {",
+			"\t",
+			"}"
+		]
+	},
+
+	"do while loop": {
+		"prefix": "do",
+		"body": [
+			"do {",
+			"\t",
+			"} while()",
+		]
+	},
+
+	"if statement": {
+		"prefix": "if",
+		"body": [
+			"if () {",
+			"\t",
+			"}"
+		],
+		"description": "if statement"
+	},
+
+	"if-throwerror": {
+		"prefix": "if-throwerror",
+		"body": [
+			"if (${1:ERROR}) {",
+			"\tThrowError(\"${2:REASON}\");",
+			"}",
+		],
+		"description": "if-throwerror"
+	},
+
+	"if-logerror": {
+		"prefix": "if-logerror",
+		"body": [
+			"if (${1:ERROR}) {",
+			"\tLogError(\"${2:REASON}\");",
+			"\treturn;",
+			"}"
+		],
+		"description": "if-logerror"
+	},
+
+	"if-printerror": {
+		"prefix": "if-printerror",
+		"body": [
+			"if (${1:ERROR}) {",
+			"\tPrintToChat(client, \"${2:REASON}\");",
+			"\treturn;",
+			"}"
+		],
+		"description": "if-printerror"
+	},
+
+	"else statement": {
+		"prefix": "else",
+		"body": [
+			"else {",
+			"\t",
+			"}"
+		],	
+		"description": "else statement"
+	},
+
+	"if else statement": {
+		"prefix": "if else",
+		"body": [
+			"if else() {",
+			"\t",
+			"}"
+		],
+		"description": "if else statement"
+	},
+
+	"include": {
+		"prefix": "include",
+		"body": [
+			"#include <${1:INCLUDE}>"
+		],
+		"description": "include"
+	},
+
+	"pragma": {
+		"prefix": "pragma",
+		"body": [
+			"#pragma ${1|newdecls required,semicolon 1,tabsize,ctrlchar,deprecated,dynamic,rational,unused|}"
+		],
+		"description": "pragma"
+	},
+
+	"define": {
+		"prefix": "define",
+		"body": [
+			"#define ${1:KEY} ${2:VALUE}"
+		],
+		"description": "define"
+	},
+
+	"myinfo": {
+		"prefix": "myinfo",
+		"body": [
+			"public Plugin myinfo = {",
+			"\tname = \"[ANY] ${1:Placeholder}\",",
+			"\tauthor = \"Drixevl\",",
+			"\tdescription = \"\",",
+			"\tversion = \"1.0.0\",",
+			"\turl = \"https://drixevl.dev/\"",
+			"};"
+		],
+		"description": "myinfo"
+	},
+
+	"plugin-template": {
+		"prefix": "plugin-template",
+		"body": [
+			"#pragma newdecls required",
+			"#pragma semicolon 1",
+			"",
+			"#include <sourcemod>",
+			"",
+			"public Plugin myinfo = {",
+			"\tname = \"[ANY] $Placeholder\",",
+			"\tauthor = \"Drixevl\",",
+			"\tdescription = \"\",",
+			"\tversion = \"1.0.0\",",
+			"\turl = \"https://drixevl.dev/\"",
+			"};",
+			"",
+			"public void OnPluginStart() {",
+			"",
+			"}"
+		],
+		"description": "plugin-template"
+	},
+
+	"client-menu": {
+		"prefix": "client-menu",
+		"body": [
+			"Menu menu = new Menu(MenuHandler_${1:SUFFIX});",
+			"menu.SetTitle(\"${2:TITLE}\");",
+			"",
+			"menu.AddItem(\"\", \"Display\");",
+			"",
+			"menu.Display(client, MENU_TIME_FOREVER);"
+		],
+		"description": "client-menu"
+	},
+
+	"clients-menu": {
+		"prefix": "clients-menu",
+		"body": [
+			"Menu menu = new Menu(MenuHandler_${1:SUFFIX});",
+			"menu.SetTitle(\"${2:TITLE}\");",
+			"",
+			"char sID[16]; char sName[MAX_NAME_LENGTH];",
+			"for (int i = 1; i <= MaxClients; i++) {",
+			"\tif (!IsClientInGame(i) || IsFakeClient(i)) {",
+			"\t\tcontinue;",
+			"\t}",
+			"\t\t",
+			"\tIntToString(GetClientUserId(i), sID, sizeof(sID));",
+			"\tGetClientName(i, sName, sizeof(sName));",
+			"\t\t",
+			"\tmenu.AddItem(sID, sName);",
+			"}",
+			"",
+			"menu.Display(client, MENU_TIME_FOREVER);"
+		],
+		"description": "clients-menu"
+	},
+
+	"menu-callback": {
+		"prefix": "menu-callback",
+		"body": [
+			"public int MenuHandler_${1:SUFFIX}(Menu menu, MenuAction action, int param1, int param2) {",
+			"\tswitch (action) {",
+			"\t\tcase MenuAction_Select: {",
+			"\t\t\t",
+			"\t\t}",
+			"\t\t",
+			"\t\tcase MenuAction_End: {",
+			"\t\t\tdelete menu;",
+			"\t\t}",
+			"\t}",
+			"}",
+		],
+		"description": "menu-callback"
+	},
+
+	"menu-back-action": {
+		"prefix": "menu-back-action",
+		"body": [
+			"case MenuAction_Cancel: {",
+			"\tif (param2 == MenuCancel_ExitBack)",
+			"}",
+		],
+		"description": "menu-back-action"
+	},
+
+	"database-callback": {
+		"prefix": "database-callback",
+		"body": [
+			"public void OnSQLConnect(Database db, const char[] error, any data) {",
+			"\tif (db == null) {",
+			"\t\tThrowError(\"Error while connecting to database: %s\", error);",
+			"\t}",
+			"\t",
+			"\tg_Database = db;",
+			"\tLogMessage(\"Connected to database successfully.\");",
+			"}",
+		],
+		"description": "database-callback"
+	},
+
+	"database-query": {
+		"prefix": "database-query",
+		"body": [
+			"char sQuery[256];",
+			"g_Database.Format(sQuery, sizeof(sQuery), \"\");",
+			"g_Database.Query(On${1:SUFFIX}, sQuery);",
+		],
+		"description": "database-query"
+	},
+
+	"database-query-callback": {
+		"prefix": "database-query-callback",
+		"body": [
+			"public void On${1:SUFFIX}(Database db, DBResultSet results, const char[] error, any data) {",
+			"\tif (results == null) {",
+			"\t\tThrowError(\"Error while ${2:REASON}: %s\", error);",
+			"\t}",
+			"}",
+		],
+		"description": "database-query-callback"
+	},
+
+	"convars-setup": {
+		"prefix": "convars-setup",
+		"body": [
+			"CreateConVar(\"sm_${1:PREFIX}_version\", \"1.0.0\", \"Version control for this plugin.\", FCVAR_DONTRECORD);",
+			"convar_Enabled = CreateConVar(\"sm_${1:PREFIX}_enabled\", \"1\", \"Should this plugin be enabled or disabled?\", FCVAR_NOTIFY, true, 0.0, true, 1.0);",
+			"//AutoExecConfig();",
+		],
+		"description": "convars-setup"
+	},
+
+	"parse-config": {
+		"prefix": "parse-config",
+		"body": [
+			"char sPath[PLATFORM_MAX_PATH];",
+			"BuildPath(Path_SM, sPath, sizeof(sPath), \"configs/${1:NAME}.cfg\");",
+			"",
+			"KeyValues kv = new KeyValues(\"${1:NAME}\");",
+			"",
+			"if (kv.ImportFromFile(sPath)) {",
+			"\t",
+			"}",
+			"",
+			"LogMessage(\"Configuration file parsed successfully: %s\", sPath);",
+		],
+		"description": "parse-config"
+	},
+
+	"command-callback": {
+		"prefix": "command-callback",
+		"body": [
+			"public Action Command_${1:SUFFIX}(int client, int args) {",
+			"\treturn Plugin_Handled;",
+			"}",
+		],
+		"description": "command-callback"
+	},
+
+	"datapack-timer": {
+		"prefix": "datapack-timer",
+		"body": [
+			"DataPack pack;",
+			"CreateDataTimer(${1:0.0}, Timer_${2:Callback}, pack, TIMER_FLAG_NO_MAPCHANGE);",
+			"pack.WriteCell(${3:INT});",
+		],
+		"description": "datapack-timer"
+	},
+
+	"ontakedamage": {
+		"prefix": "ontakedamage",
+		"body": [
+			"public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& damage, int& damagetype) {",
+			"\t",
+			"\treturn Plugin_Continue;",
+			"}",
+		],
+		"description": "ontakedamage"
+	},
+
+	"ontakedamage-full": {
+		"prefix": "ontakedamage-full",
+		"body": [
+			"public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& damage, int& damagetype,",
+			"\t\t\t\t\t\t\tint& weapon, float damageForce[3], float damagePosition[3], int damagecustom) {",
+			"\t",
+			"\treturn Plugin_Continue;",
+			"}",
+		],
+		"description": "ontakedamage-full"
+	},
+
+	"menu-get-info": {
+		"prefix": "menu-get-info",
+		"body": [
+			"char sInfo[32];",
+			"menu.GetItem(param2, sInfo, sizeof(sInfo));",
+		],
+		"description": "menu-get-info"
+	},
+
+	"menu-get-info-with-display": {
+		"prefix": "menu-get-info-with-display",
+		"body": [
+			"char sInfo[32]; char sDisplay[256];",
+			"menu.GetItem(param2, sInfo, sizeof(sInfo), _, sDisplay, sizeof(sDisplay));",
+		],
+		"description": "menu-get-info-with-display"
+	},
+}
