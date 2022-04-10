@@ -1339,10 +1339,8 @@ stock int TF2_GetSpellBook(int client)
 {
 	int entity = -1;
 	while((entity = FindEntityByClassname(entity, "tf_weapon_spellbook")) != INVALID_ENT_REFERENCE)
-	{
 		if (HasEntProp(entity, Prop_Send, "m_hOwnerEntity") && GetEntPropEnt(entity, Prop_Send, "m_hOwnerEntity") == client)
 			return entity;
-	}
 
 	return -1;
 }
