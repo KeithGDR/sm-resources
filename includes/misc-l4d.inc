@@ -20,6 +20,9 @@
 #endif
 #define _misc_l4d_included
 
+#define TEAM_SURVIVORS 2
+#define TEAM_INFECTED 3
+
 enum L4DGame {
 	L4DGame_L4D = 0,
 	L4DGame_L4D2 = 1

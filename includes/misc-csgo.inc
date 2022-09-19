@@ -275,6 +275,63 @@ stock int CSGO_GetClientArmor(int client) {
 }
 
 /**
+*	Gives the client a helmet.
+*
+*	client	Client index.
+*
+*	return	N/A
+**/
+stock void CSGO_GiveHelmet(int client) {
+	SetEntProp(client, Prop_Send, "m_bHasHelmet", true);
+}
+
+/**
+*	Removes the clients helmet.
+*
+*	client	Client index.
+*
+*	return	N/A
+**/
+stock void CSGO_RemoveHelmet(int client) {
+	SetEntProp(client, Prop_Send, "m_bHasHelmet", false);
+}
+
+/**
+*	Sets the value for the clients helmet to on or off.
+*
+*	client	Client index.
+*	value	Value to set.
+*
+*	return	N/A
+**/
+stock void CSGO_SetHelmet(int client, bool value) {
+	SetEntProp(client, Prop_Send, "m_bHasHelmet", value);
+}
+
+/**
+*	Toggles the clients helmet on or off.
+*
+*	client	Client index.
+*
+*	return	N/A
+**/
+stock void CSGO_ToggleHelmet(int client) {
+	bool value = GetEntProp(client, Prop_Send, "m_bHasHelmet") == true ? false : true;
+	SetEntProp(client, Prop_Send, "m_bHasHelmet", value);
+}
+
+/**
+*	Returns the clients helmet status.
+*
+*	client	Client index.
+*
+*	return	True or False.
+**/
+stock bool CSGO_GetHelmet(int client) {
+	return GetEntProp(client, Prop_Send, "m_bHasHelmet");
+}
+
+/**
 *	A simple stock to replace a certain weapon slot on a client.
 *
 *	client	Client index.
