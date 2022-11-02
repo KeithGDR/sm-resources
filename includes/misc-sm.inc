@@ -5000,6 +5000,8 @@ public int ___MenuHandler_SendConfirmation(Menu menu, MenuAction action, int par
 			delete menu;
 		}
 	}
+
+	return 0;
 }
 
 /*--------------------------------------------------------->*/
