@@ -3544,7 +3544,7 @@ stock bool TF2_RemoveCash(int client, int value) {
 	return true;
 }
 
-stock void TF2_CreateAnnotation(int client, float[3] origin, const char[] text, float lifetime = 10.0, const char[] sound = "vo/null.wav") {
+stock void TF2_CreateAnnotation(int client, float origin[3], const char text[], float lifetime = 10.0, const char[] sound = "vo/null.wav") {
 	if (!IsClientInGame(client)) {
 		return;
 	}
