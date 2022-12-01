@@ -433,6 +433,8 @@ public Action __Timer_DelayEndBuffer(Handle timer, any userid) {
 	if ((client = GetClientOfUserId(userid)) > 0) {
 		PrintToConsole(client, "------------------------------------------------------");
 	}
+
+	return Plugin_Stop;
 }
 
 /*
@@ -447,15 +449,15 @@ public Action __Timer_DelayEndBuffer(Handle timer, any userid) {
 */
 //Forgot
 //Lost but not forgotten.
-stock bool CheckAdminFlagsByString(int client, const char[] flags) {
-	if (client == 0 || IsFakeClient(client) || strlen(flags) == 0) {
+stock bool CheckAdminFlagsByString(int client, const char[] flagsStr) {
+	if (client == 0 || IsFakeClient(client) || strlen(flagsStr) == 0) {
 		return false;
 	}
 
 	AdminId admin = GetUserAdmin(client);
 
 	if (admin != INVALID_ADMIN_ID) {
-		int count; int found; int flags = ReadFlagString(flags);
+		int count; int found; int flags = ReadFlagString(flagsStr);
 
 		for (int i = 0; i <= 20; i++) {
 			if (flags & (1 << i)) {
@@ -790,6 +792,8 @@ stock int GetRandomString(char[] buffer, int size, int length = 32, const char[]
 	}
 
 	buffer[length] = '\0';
+
+	return len;
 }
 
 stock void FillArrayToValue(any[] array, int size, any value, int start = 0) {
@@ -1404,9 +1408,8 @@ stock int GetTeamAliveCount(int team) {
 
 	for (int i = 1; i <= MaxClients; i++) {
 		if (!IsClientInGame(i) || IsClientSourceTV(i) || !IsPlayerAlive(i) || GetClientTeam(i) != team) {
-
-		}
 			continue;
+		}
 
 		count++;
 	}
@@ -1869,6 +1872,37 @@ stock void KnockbackClient(int client, float scale = 50.0, int dir = DIR_BACKWAR
 	TeleportEntity(client, (z_offset > 0.0 ? vecOrigin : NULL_VECTOR), NULL_VECTOR, pResults);
 }
 
+stock bool GetClientCrosshairOrigin(int client, float pOrigin[3], bool filter_players = true, float distance = 35.0)
+{
+	if (client == 0 || client > MaxClients || !IsClientInGame(client))
+		return false;
+
+	float vOrigin[3];
+	GetClientEyePosition(client,vOrigin);
+
+	float vAngles[3];
+	GetClientEyeAngles(client, vAngles);
+
+	Handle trace = TR_TraceRayFilterEx(vOrigin, vAngles, MASK_SHOT, RayType_Infinite, filter_players ? TraceEntityFilterPlayer : TraceEntityFilterNone, client);
+	bool bReturn = TR_DidHit(trace);
+
+	if (bReturn)
+	{
+		float vStart[3];
+		TR_GetEndPosition(vStart, trace);
+
+		float vBuffer[3];
+		GetAngleVectors(vAngles, vBuffer, NULL_VECTOR, NULL_VECTOR);
+
+		pOrigin[0] = vStart[0] + (vBuffer[0] * -distance);
+		pOrigin[1] = vStart[1] + (vBuffer[1] * -distance);
+		pOrigin[2] = vStart[2] + (vBuffer[2] * -distance);
+	}
+
+	delete trace;
+	return bReturn;
+}
+
 stock void BlinkClient(int client, float distance = 35.0) {
 	float vecOrigin[3];
 	GetClientAbsOrigin(client, vecOrigin);
@@ -1978,6 +2012,8 @@ stock void ShowOverlay(int client, const char[] overlay, float duration = 0.0) {
 
 public Action __Timer_ResetOverlay(Handle timer, any data) {
 	ShowOverlay(GetClientOfUserId(data), "0", 0.0);
+
+	return Plugin_Stop;
 }
 
 stock void ClearOverlay(int client) {
@@ -1992,7 +2028,7 @@ stock void ClearOverlay(int client) {
 }
 
 stock float GetVotePercent(int votes, int totalVotes) {
-	return FloatDiv(float(votes), float(totalVotes));
+	return float(votes) / float(totalVotes);
 }
 
 /* Found from the MOTDGD plugin. Though, I did reformat it for the new SourceMod syntax. */
@@ -2167,6 +2203,8 @@ public Action __Timer_DelayClientConcept(Handle timer, DataPack data) {
 	if (client > 0 && IsClientInGame(client) && IsPlayerAlive(client)) {
 		SpeakResponseConcept(client, sConcept, sContext, sClass);
 	}
+
+	return Plugin_Stop;
 }
 
 stock void SpeakResponseConceptAll(const char[] concept, const char[] context = "", const char[] class = "") {
@@ -2202,6 +2240,8 @@ public Action __Timer_DelayAllConcept(Handle timer, DataPack data) {
 	data.ReadString(sClass, sizeof(sClass));
 
 	SpeakResponseConceptAll(sConcept, sContext, sClass);
+
+	return Plugin_Stop;
 }
 
 stock void SQL_FetchClientName(int client, Database database, char[] buffer, int size) {
@@ -2515,7 +2555,7 @@ stock void CreatePlayerSpray(int client, float origin[3]) {
 	TE_WriteNum("m_nPlayer", client);
 	TE_SendToAll();
 	
-	if (IsSoundPrecached("player/sprayer.wav")) {
+	if (PrecacheSound("player/sprayer.wav")) {
 		EmitSoundToAll("player/sprayer.wav", client, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_NOFLAGS, 0.6);
 	}
 }
@@ -2894,7 +2934,7 @@ stock bool DisableEntity(int entity) {
 }
 
 stock bool IsEntityDisabled(int entity) {
-	return GetEntProp(entity, Prop_Data, "m_bDisabled", 1);
+	return GetEntProp(entity, Prop_Data, "m_bDisabled", 1) == 1;
 }
 
 stock bool EnableEntityMotion(int entity) {
@@ -2931,7 +2971,7 @@ stock void SetEntityMaxSpeed(int entity, float value) {
 }
 
 stock bool IsEntityLocked(int entity) {
-	return GetEntProp(entity, Prop_Data, "m_bLocked", 1);
+	return GetEntProp(entity, Prop_Data, "m_bLocked", 1) == 1;
 }
 
 stock void SetEntityLocked(int entity, bool locked) {
@@ -3306,7 +3346,7 @@ stock void GetDamageNameByType(int damagetype, char[] buffer, int size) {
 	}
 }
 
-void GetButtons(int buttons, char[] buffer, int size) {
+stock void GetButtons(int buttons, char[] buffer, int size) {
 	if ((buttons & IN_ATTACK) == IN_ATTACK) {
 		Format(buffer, size, "%s|IN_ATTACK", buffer);
 	}
@@ -3743,7 +3783,7 @@ stock bool EmitSoundToClientSafe(int client, char sample[PLATFORM_MAX_PATH], int
 		strcopy(sample, sizeof(sample), sample[6]);
 	}
 		
-	if (IsSoundPrecached(sample)) {
+	if (PrecacheSound(sample)) {
 		EmitSoundToClient(client, sample, entity, channel, level, flags, volume, pitch, speakerentity, origin, dir, updatePos, soundtime);
 	}
 	
@@ -3774,6 +3814,8 @@ stock bool EmitSoundToClientSafeDelayed(int client, const char[] sample, float d
 	hPack.WriteFloat(dir[2]);
 	hPack.WriteCell(updatePos);
 	hPack.WriteFloat(soundtime);
+
+	return true; //Why that function have bool returning type instead void?
 }
 
 public Action __Timer_PlayClientSound(Handle timer, DataPack data) {
@@ -3806,6 +3848,8 @@ public Action __Timer_PlayClientSound(Handle timer, DataPack data) {
 	float soundtime = data.ReadFloat();
 
 	EmitSoundToClientSafe(client, sample, entity, channel, level, flags, volume, pitch, speakerentity, origin, dir, updatePos, soundtime);
+
+	return Plugin_Stop;
 }
 
 stock bool EmitSoundToAllSafe(char sample[PLATFORM_MAX_PATH], int entity = SOUND_FROM_PLAYER, int channel = SNDCHAN_AUTO, int level = SNDLEVEL_NORMAL, int flags = SND_NOFLAGS, float volume = SNDVOL_NORMAL, int pitch = SNDPITCH_NORMAL, int speakerentity = -1, const float origin[3] = NULL_VECTOR, const float dir[3] = NULL_VECTOR, bool updatePos = true, float soundtime = 0.0) {
@@ -3817,7 +3861,7 @@ stock bool EmitSoundToAllSafe(char sample[PLATFORM_MAX_PATH], int entity = SOUND
 		strcopy(sample, sizeof(sample), sample[6]);
 	}
 		
-	if (IsSoundPrecached(sample)) {
+	if (PrecacheSound(sample)) {
 		EmitSoundToAll(sample, entity, channel, level, flags, volume, pitch, speakerentity, origin, dir, updatePos, soundtime);
 	}
 	
@@ -3847,6 +3891,8 @@ stock bool EmitSoundToAllSafeDelayed(const char[] sample, float delayed = 0.0, i
 	hPack.WriteFloat(dir[2]);
 	hPack.WriteCell(updatePos);
 	hPack.WriteFloat(soundtime);
+
+	return true; //Why that function have bool returning type instead void?
 }
 
 public Action __Timer_PlayAllSound(Handle timer, DataPack data) {
@@ -3877,6 +3923,8 @@ public Action __Timer_PlayAllSound(Handle timer, DataPack data) {
 	float soundtime = data.ReadFloat();
 
 	EmitSoundToAllSafe(sample, entity, channel, level, flags, volume, pitch, speakerentity, origin, dir, updatePos, soundtime);
+
+	return Plugin_Stop;
 }
 
 stock bool EmitAmbientSoundSafe(const char[] sample, const float origin[3], int entity = SOUND_FROM_WORLD, int level = SNDLEVEL_NORMAL, int flags = SND_NOFLAGS, float vol = SNDVOL_NORMAL, int pitch = SNDPITCH_NORMAL, float delay = 0.0) {
@@ -3891,7 +3939,7 @@ stock bool EmitAmbientSoundSafe(const char[] sample, const float origin[3], int 
 		Format(sSound, sizeof(sSound), "*%s", sSound);
 	}
 
-	if (IsSoundPrecached(sSound)) {
+	if (PrecacheSound(sSound)) {
 		LogError("Error playing ambient sound, not precached: %s", sSound);
 		return false;
 	}
@@ -4166,6 +4214,8 @@ stock bool SetConVarFlag(ConVar convar, bool add, int flag) {
 	}
 	
 	convar.Flags = flags;
+
+	return true; //Why that function have bool returning type instead void?
 }
 
 stock bool SetConVarFlagByName(const char[] name, bool add, int flag) {
@@ -4180,6 +4230,8 @@ stock bool SetConVarFlagByName(const char[] name, bool add, int flag) {
 	}
 	
 	convar.Flags = flags;
+
+	return true; //Why that function have bool returning type instead void?
 }
 
 stock int[] GetConVarColor(ConVar convar) {
@@ -4751,17 +4803,18 @@ stock bool AddMenuItemFormat(Menu menu, const char[] info, int style = ITEMDRAW_
 *
 *	menu	Menu handle.
 *	info		Info to search for.
+*	defaultvalue	Default value to use if not found.
 *
 *	return	True if found and removed, false otherwise.
 **/
-stock bool RemoveMenuItemByInfo(Menu menu, const char[] info) {
+stock bool RemoveMenuItemByInfo(Menu menu, const char[] info, bool defaultvalue = false) {
 	if (menu == null || strlen(info) == 0) {
 		return defaultvalue;
 	}
 	
-	char info[1024];
+	char tempInfo[1024];
 	for (int i = 0; i < menu.ItemCount; i++) {
-		if (menu.GetItem(i, info, sizeof(info)) && StrEqual(info, info, false)) {
+		if (menu.GetItem(i, tempInfo, sizeof(tempInfo)) && StrEqual(tempInfo, info, false)) {
 			return menu.RemoveItem(i);
 		}
 	}
@@ -4774,10 +4827,11 @@ stock bool RemoveMenuItemByInfo(Menu menu, const char[] info) {
 *
 *	menu	Menu handle.
 *	name		Name to search for.
+*	defaultvalue	Default value to use if not found.
 *
 *	return	True if found and removed, false otherwise.
 **/
-stock bool RemoveMenuItemByName(Menu menu, const char[] name) {
+stock bool RemoveMenuItemByName(Menu menu, const char[] name, bool defaultvalue = false) {
 	if (menu == null || strlen(name) == 0) {
 		return defaultvalue;
 	}
@@ -5041,3 +5095,4 @@ stock bool ReadAnyString(DataPack pack, char[] buffer, int size) {
 /*--------------------------------------------------------->*/
 //This is the end of this THICCCCCC include file.
 /*--------------------------------------------------------->*/
+

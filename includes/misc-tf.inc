@@ -27,9 +27,9 @@
 #tryinclude <tf2attributes>
 #define REQUIRE_PLUGINS
 
-#define TFTeam_Spectator 1
-#define TFTeam_Red 2
-#define TFTeam_Blue 3
+//#define TFTeam_Spectator 1
+//#define TFTeam_Red 2
+//#define TFTeam_Blue 3
 #define TFTeam_Boss 5
 
 #define QUALITY_NAME_LENGTH 32
@@ -1333,7 +1333,7 @@ stock int TF2_GetSpell(int client) {
 	int entity = TF2_GetSpellBook(client);
 
 	if (IsValidEntity(entity)) {
-		return GetEntProp(ent, Prop_Send, "m_iSelectedSpellIndex");
+		return GetEntProp(entity, Prop_Send, "m_iSelectedSpellIndex");
 	}
 
 	return -1;
@@ -1352,6 +1352,8 @@ stock int TF2_GetSpellUses(int client) {
 	if (IsValidEntity(entity)) {
 		return GetEntProp(entity, Prop_Send, "m_iSpellCharges");
 	}
+
+	return 0;
 }
 
 /**
@@ -2354,7 +2356,7 @@ stock void TF2_DestroyBuildingsTeam(TFTeam team, bool destroy = true) {
 *	return	N/A
 **/
 stock void TF2_DestroyBuildingsAll(bool destroy = true) {
-	int entity = -1; int builder = -1;
+	int entity = -1;
 	while ((entity = FindEntityByClassname(entity, "obj_*")) != -1) {
 		if (destroy) {
 			SDKHooks_TakeDamage(entity, 0, 0, 99999.0);
@@ -2524,9 +2526,10 @@ stock void TF2_GetQualityFromID(TF2Quality quality, char[] buffer, int size, boo
 		case TF2Quality_Rarity1: {
 			strcopy(buffer, size, "rarity1");
 		}
-		case TF2Quality_Genuine: {
-			strcopy(buffer, size, "genuine");
-		}
+		//The same value as TF2Quality_Rarity1
+		//case TF2Quality_Genuine: {
+		//	strcopy(buffer, size, "genuine");
+		//}
 		case TF2Quality_Rarity2: {
 			strcopy(buffer, size, "rarity2");
 		}
@@ -2536,9 +2539,10 @@ stock void TF2_GetQualityFromID(TF2Quality quality, char[] buffer, int size, boo
 		case TF2Quality_Rarity3: {
 			strcopy(buffer, size, "rarity3");
 		}
-		case TF2Quality_Rarity4: {
-			strcopy(buffer, size, "rarity4");
-		}
+		//The same value as TF2Quality_Unusual
+		//case TF2Quality_Rarity4: {
+		//	strcopy(buffer, size, "rarity4");
+		//}
 		case TF2Quality_Unusual: {
 			strcopy(buffer, size, "unusual");
 		}
@@ -3391,6 +3395,1548 @@ stock int TF2_GetIndexFromWeaponName(const char[] name) {
 	return -1;
 }
 
+stock void TF2_GetWeaponNameFromIndex(int index, char[] buffer, int size) {
+	switch (index) {
+		//Misc
+		case 154: {
+			strcopy(buffer, size, "The Pain Train");
+		}
+		case 160: {
+			strcopy(buffer, size, "Vintage Lugermorph");
+		}
+		case 199: {
+			strcopy(buffer, size, "Shotgun (Renamed/Strange)");
+		}
+		case 209: {
+			strcopy(buffer, size, "Pistol (Renamed/Strange)");
+		}
+		case 264: {
+			strcopy(buffer, size, "Frying Pan");
+		}
+		case 294: {
+			strcopy(buffer, size, "Lugermorph");
+		}
+		case 357: {
+			strcopy(buffer, size, "The Half-Zatoichi");
+		}
+		case 415: {
+			strcopy(buffer, size, "The Reserve Shooter");
+		}
+		case 423: {
+			strcopy(buffer, size, "Saxxy");
+		}
+		case 474: {
+			strcopy(buffer, size, "The Conscientious Objector");
+		}
+		case 880: {
+			strcopy(buffer, size, "The Freedom Staff");
+		}
+		case 939: {
+			strcopy(buffer, size, "The Bat Outta Hell");
+		}
+		case 954: {
+			strcopy(buffer, size, "The Memory Maker");
+		}
+		case 1013: {
+			strcopy(buffer, size, "The Ham Shank");
+		}
+		case 1071: {
+			strcopy(buffer, size, "Gold Frying Pan");
+		}
+		case 1101: {
+			strcopy(buffer, size, "The B.A.S.E. Jumper");
+		}
+		case 1123: {
+			strcopy(buffer, size, "The Necro Smasher");
+		}
+		case 1127: {
+			strcopy(buffer, size, "The Crossing Guard");
+		}
+		case 1141: {
+			strcopy(buffer, size, "Festive Shotgun");
+		}
+		case 1153: {
+			strcopy(buffer, size, "Panic Attack");
+		}
+		case 15003: {
+			strcopy(buffer, size, "Backwoods Boomstick");
+		}
+		case 15013: {
+			strcopy(buffer, size, "Red Rock Roscoe");
+		}
+		case 15016: {
+			strcopy(buffer, size, "Rustic Ruiner");
+		}
+		case 15018: {
+			strcopy(buffer, size, "Homemade Heater");
+		}
+		case 15035: {
+			strcopy(buffer, size, "Hickory Holepuncher");
+		}
+		case 15041: {
+			strcopy(buffer, size, "Local Hero");
+		}
+		case 15044: {
+			strcopy(buffer, size, "Civic Duty");
+		}
+		case 15046: {
+			strcopy(buffer, size, "Black Dahlia");
+		}
+		case 15047: {
+			strcopy(buffer, size, "Lightning Rod");
+		}
+		case 15056: {
+			strcopy(buffer, size, "Sandstone Special");
+		}
+		case 15060: {
+			strcopy(buffer, size, "Macabre Web");
+		}
+		case 15061: {
+			strcopy(buffer, size, "Nutcracker");
+		}
+		case 15085: {
+			strcopy(buffer, size, "Autumn");
+		}
+		case 15100: {
+			strcopy(buffer, size, "Blue Mew");
+		}
+		case 15101: {
+			strcopy(buffer, size, "Brain Candy");
+		}
+		case 15102: {
+			strcopy(buffer, size, "Shot to Hell");
+		}
+		case 15109: {
+			strcopy(buffer, size, "Flower Power");
+		}
+		case 15123: {
+			strcopy(buffer, size, "Coffin Nail");
+		}
+		case 15126: {
+			strcopy(buffer, size, "Dressed To Kill");
+		}
+		case 15132: {
+			strcopy(buffer, size, "Coffin Nail");
+		}
+		case 15133: {
+			strcopy(buffer, size, "Dressed to Kill");
+		}
+		case 15148: {
+			strcopy(buffer, size, "Blitzkrieg");
+		}
+		case 15152: {
+			strcopy(buffer, size, "Red Bear");
+		}
+		case 30666: {
+			strcopy(buffer, size, "The C.A.P.P.E.R.");
+		}
+		case 30758: {
+			strcopy(buffer, size, "Prinny Machete");
+		}
+		
+		//Scout Primary
+		case 13: {
+			strcopy(buffer, size, "Scattergun");
+		}
+		case 200: {
+			strcopy(buffer, size, "Scattergun (Renamed/Strange)");
+		}
+		case 45: {
+			strcopy(buffer, size, "Force-A-Nature");
+		}
+		case 220: {
+			strcopy(buffer, size, "The Shortstop");
+		}
+		case 448: {
+			strcopy(buffer, size, "The Soda Popper");
+		}
+		case 669: {
+			strcopy(buffer, size, "Festive Scattergun");
+		}
+		case 772: {
+			strcopy(buffer, size, "Baby Face's Blaster");
+		}
+		case 799: {
+			strcopy(buffer, size, "Silver Botkiller Scattergun Mk.I");
+		}
+		case 808: {
+			strcopy(buffer, size, "Gold Botkiller Scattergun Mk.I");
+		}
+		case 888: {
+			strcopy(buffer, size, "Rust Botkiller Scattergun Mk.I");
+		}
+		case 897: {
+			strcopy(buffer, size, "Blood Botkiller Scattergun Mk.I");
+		}
+		case 906: {
+			strcopy(buffer, size, "Carbonado Botkiller Scattergun Mk.I");
+		}
+		case 915: {
+			strcopy(buffer, size, "Diamond Botkiller Scattergun Mk.I");
+		}
+		case 964: {
+			strcopy(buffer, size, "Silver Botkiller Scattergun Mk.II");
+		}
+		case 973: {
+			strcopy(buffer, size, "Gold Botkiller Scattergun Mk.II");
+		}
+		case 1078: {
+			strcopy(buffer, size, "Festive Force-A-Nature");
+		}
+		case 1103: {
+			strcopy(buffer, size, "The Back Scatter");
+		}
+		case 15002: {
+			strcopy(buffer, size, "Night Terror");
+		}
+		case 15015: {
+			strcopy(buffer, size, "Tartan Torpedo");
+		}
+		case 15021: {
+			strcopy(buffer, size, "Country Crusher");
+		}
+		case 15029: {
+			strcopy(buffer, size, "Backcountry Blaster");
+		}
+		case 15036: {
+			strcopy(buffer, size, "Spruce Deuce");
+		}
+		case 15053: {
+			strcopy(buffer, size, "Current Event");
+		}
+		case 15065: {
+			strcopy(buffer, size, "Macabre Web");
+		}
+		case 15069: {
+			strcopy(buffer, size, "Nutcracker");
+		}
+		case 15106: {
+			strcopy(buffer, size, "Blue Mew");
+		}
+		case 15107: {
+			strcopy(buffer, size, "Flower Power");
+		}
+		case 15108: {
+			strcopy(buffer, size, "Shot to Hell");
+		}
+		case 15131: {
+			strcopy(buffer, size, "Coffin Nail");
+		}
+		case 15151: {
+			strcopy(buffer, size, "Killer Bee");
+		}
+		case 15157: {
+			strcopy(buffer, size, "Corsair");
+		}
+		
+		//Scout Secondary
+		case 23: {
+			strcopy(buffer, size, "Scout's Pistol");
+		}
+		case 46: {
+			strcopy(buffer, size, "Bonk! Atomic Punch");
+		}
+		case 163: {
+			strcopy(buffer, size, "Crit-a-Cola");
+		}
+		case 222: {
+			strcopy(buffer, size, "Mad Milk");
+		}
+		case 449: {
+			strcopy(buffer, size, "The Winger");
+		}
+		case 773: {
+			strcopy(buffer, size, "Pretty Boy's Pocket Pistol");
+		}
+		case 812: {
+			strcopy(buffer, size, "The Flying Guillotine");
+		}
+		case 833: {
+			strcopy(buffer, size, "The Flying Guillotine (Genuine)");
+		}
+		case 1121: {
+			strcopy(buffer, size, "Mutated Milk");
+		}
+		case 1145: {
+			strcopy(buffer, size, "Festive Bonk!");
+		}
+		
+		//Scout Melee
+		case 0: {
+			strcopy(buffer, size, "Bat");
+		}
+		case 190: {
+			strcopy(buffer, size, "Bat (Renamed/Strange)");
+		}
+		case 44: {
+			strcopy(buffer, size, "The Sandman");
+		}
+		case 221: {
+			strcopy(buffer, size, "The Holy Mackerel");
+		}
+		case 317: {
+			strcopy(buffer, size, "The Candy Cane");
+		}
+		case 325: {
+			strcopy(buffer, size, "The Boston Basher");
+		}
+		case 349: {
+			strcopy(buffer, size, "Sun-on-a-Stick");
+		}
+		case 355: {
+			strcopy(buffer, size, "The Fan O'War");
+		}
+		case 450: {
+			strcopy(buffer, size, "The Atomizer");
+		}
+		case 452: {
+			strcopy(buffer, size, "Three-Rune Blade");
+		}
+		case 572: {
+			strcopy(buffer, size, "Unarmed Combat");
+		}
+		case 648: {
+			strcopy(buffer, size, "The Wrap Assassin");
+		}
+		case 660: {
+			strcopy(buffer, size, "Festive Bat");
+		}
+		case 999: {
+			strcopy(buffer, size, "Festive Holy Mackerel");
+		}
+		case 30667: {
+			strcopy(buffer, size, "Batsaber");
+		}
+		
+		//Soldier Primary
+		case 18: {
+			strcopy(buffer, size, "Rocket Launcher");
+		}
+		case 205: {
+			strcopy(buffer, size, "Rocket Launcher (Renamed/Strange)");
+		}
+		case 127: {
+			strcopy(buffer, size, "The Direct Hit");
+		}
+		case 228: {
+			strcopy(buffer, size, "The Black Box");
+		}
+		case 237: {
+			strcopy(buffer, size, "Rocket Jumper");
+		}
+		case 414: {
+			strcopy(buffer, size, "The Liberty Launcher");
+		}
+		case 441: {
+			strcopy(buffer, size, "The Cow Mangler 5000");
+		}
+		case 513: {
+			strcopy(buffer, size, "The Original");
+		}
+		case 658: {
+			strcopy(buffer, size, "Festive Rocket Launcher");
+		}
+		case 730: {
+			strcopy(buffer, size, "The Beggar's Bazooka");
+		}
+		case 800: {
+			strcopy(buffer, size, "Silver Botkiller Rocket Launcher Mk.I");
+		}
+		case 809: {
+			strcopy(buffer, size, "Gold Botkiller Rocket Launcher Mk.I");
+		}
+		case 889: {
+			strcopy(buffer, size, "Rust Botkiller Rocket Launcher Mk.I");
+		}
+		case 898: {
+			strcopy(buffer, size, "Blood Botkiller Rocket Launcher Mk.I");
+		}
+		case 907: {
+			strcopy(buffer, size, "Carbonado Botkiller Rocket Launcher Mk.I");
+		}
+		case 916: {
+			strcopy(buffer, size, "Diamond Botkiller Rocket Launcher Mk.I");
+		}
+		case 965: {
+			strcopy(buffer, size, "Silver Botkiller Rocket Launcher Mk.II");
+		}
+		case 974: {
+			strcopy(buffer, size, "Gold Botkiller Rocket Launcher Mk.II");
+		}
+		case 1085: {
+			strcopy(buffer, size, "Festive Black Box");
+		}
+		case 1104: {
+			strcopy(buffer, size, "The Air Strike");
+		}
+		case 15006: {
+			strcopy(buffer, size, "Woodland Warrior");
+		}
+		case 15014: {
+			strcopy(buffer, size, "Sand Cannon");
+		}
+		case 15028: {
+			strcopy(buffer, size, "American Pastoral");
+		}
+		case 15043: {
+			strcopy(buffer, size, "Smalltown Bringdown");
+		}
+		case 15052: {
+			strcopy(buffer, size, "Shell Shocker");
+		}
+		case 15057: {
+			strcopy(buffer, size, "Aqua Marine");
+		}
+		case 15081: {
+			strcopy(buffer, size, "Autumn");
+		}
+		case 15104: {
+			strcopy(buffer, size, "Blue Mew");
+		}
+		case 15105: {
+			strcopy(buffer, size, "Brain Candy");
+		}
+		case 15129: {
+			strcopy(buffer, size, "Coffin Nail");
+		}
+		case 15130: {
+			strcopy(buffer, size, "High Roller's");
+		}
+		case 15150: {
+			strcopy(buffer, size, "Warhawk");
+		}
+		
+		//Soldier Secondary
+		case 10: {
+			strcopy(buffer, size, "Soldier's Shotgun");
+		}
+		case 129: {
+			strcopy(buffer, size, "The Buff Banner");
+		}
+		case 133: {
+			strcopy(buffer, size, "Gunboats");
+		}
+		case 226: {
+			strcopy(buffer, size, "The Battalion's Backup");
+		}
+		case 354: {
+			strcopy(buffer, size, "The Concheror");
+		}
+		case 442: {
+			strcopy(buffer, size, "The Righteous Bison");
+		}
+		case 444: {
+			strcopy(buffer, size, "The Mantreads");
+		}
+		case 1001: {
+			strcopy(buffer, size, "Festive Buff Banner");
+		}
+		
+		//Soldier Melee
+		case 6: {
+			strcopy(buffer, size, "Shovel");
+		}
+		case 196: {
+			strcopy(buffer, size, "Shovel (Renamed/Strange)");
+		}
+		case 128: {
+			strcopy(buffer, size, "The Equalizer");
+		}
+		case 416: {
+			strcopy(buffer, size, "The Market Gardener");
+		}
+		case 447: {
+			strcopy(buffer, size, "The Disciplinary Action");
+		}
+		case 775: {
+			strcopy(buffer, size, "The Escape Plan");
+		}
+
+		//Pyro Primary
+		case 21: {
+			strcopy(buffer, size, "Flame Thrower");
+		}
+		case 208: {
+			strcopy(buffer, size, "Flame Thrower (Renamed/Strange)");
+		}
+		case 40: {
+			strcopy(buffer, size, "The Backburner");
+		}
+		case 215: {
+			strcopy(buffer, size, "The Degreaser");
+		}
+		case 594: {
+			strcopy(buffer, size, "The Phlogistinator");
+		}
+		case 659: {
+			strcopy(buffer, size, "Festive Flame Thrower");
+		}
+		case 741: {
+			strcopy(buffer, size, "The Rainblower");
+		}
+		case 798: {
+			strcopy(buffer, size, "Silver Botkiller Flame Thrower Mk.I");
+		}
+		case 807: {
+			strcopy(buffer, size, "Gold Botkiller Flame Thrower Mk.I");
+		}
+		case 887: {
+			strcopy(buffer, size, "Rust Botkiller Flame Thrower Mk.I");
+		}
+		case 896: {
+			strcopy(buffer, size, "Blood Botkiller Flame Thrower Mk.I");
+		}
+		case 905: {
+			strcopy(buffer, size, "Carbonado Botkiller Flame Thrower Mk.I");
+		}
+		case 914: {
+			strcopy(buffer, size, "Diamond Botkiller Flame Thrower Mk.I");
+		}
+		case 963: {
+			strcopy(buffer, size, "Silver Botkiller Flame Thrower Mk.II");
+		}
+		case 972: {
+			strcopy(buffer, size, "Gold Botkiller Flame Thrower Mk.II");
+		}
+		case 1146: {
+			strcopy(buffer, size, "Festive Backburner");
+		}
+		case 1178: {
+			strcopy(buffer, size, "Dragon's Fury");
+		}
+		case 15005: {
+			strcopy(buffer, size, "Forest Fire");
+		}
+		case 15017: {
+			strcopy(buffer, size, "Barn Burner");
+		}
+		case 15030: {
+			strcopy(buffer, size, "Bovine Blazemaker");
+		}
+		case 15034: {
+			strcopy(buffer, size, "Earth, Sky and Fire");
+		}
+		case 15049: {
+			strcopy(buffer, size, "Flash Fryer");
+		}
+		case 15054: {
+			strcopy(buffer, size, "Turbine Torcher");
+		}
+		case 15066: {
+			strcopy(buffer, size, "Autumn");
+		}
+		case 15067: {
+			strcopy(buffer, size, "Pumpkin Patch");
+		}
+		case 15068: {
+			strcopy(buffer, size, "Nutcracker");
+		}
+		case 15089: {
+			strcopy(buffer, size, "Balloonicorn");
+		}
+		case 15090: {
+			strcopy(buffer, size, "Rainbow");
+		}
+		case 15115: {
+			strcopy(buffer, size, "Coffin Nail");
+		}
+		case 15141: {
+			strcopy(buffer, size, "Warhawk");
+		}
+		case 30474: {
+			strcopy(buffer, size, "Nostromo Napalmer");
+		}
+		
+		//Pyro Secondary
+		case 12: {
+			strcopy(buffer, size, "Pyro's Shotgun");
+		}
+		case 39: {
+			strcopy(buffer, size, "The Flare Gun");
+		}
+		case 351: {
+			strcopy(buffer, size, "The Detonator");
+		}
+		case 595: {
+			strcopy(buffer, size, "The Manmelter");
+		}
+		case 740: {
+			strcopy(buffer, size, "The Scorch Shot");
+		}
+		case 1081: {
+			strcopy(buffer, size, "Festive Flare Gun");
+		}
+		case 1179: {
+			strcopy(buffer, size, "Thermal Thruster");
+		}
+		case 1180: {
+			strcopy(buffer, size, "Gas Passer");
+		}
+		
+		//Pyro Melee
+		case 2: {
+			strcopy(buffer, size, "Fire Axe");
+		}
+		case 192: {
+			strcopy(buffer, size, "Fire Axe (Renamed/Strange)");
+		}
+		case 38: {
+			strcopy(buffer, size, "The Axtinguisher");
+		}
+		case 153: {
+			strcopy(buffer, size, "Homewrecker");
+		}
+		case 214: {
+			strcopy(buffer, size, "The Powerjack");
+		}
+		case 326: {
+			strcopy(buffer, size, "The Back Scratcher");
+		}
+		case 348: {
+			strcopy(buffer, size, "Sharpened Volcano Fragment");
+		}
+		case 457: {
+			strcopy(buffer, size, "The Postal Pummeler");
+		}
+		case 466: {
+			strcopy(buffer, size, "The Maul");
+		}
+		case 593: {
+			strcopy(buffer, size, "The Third Degree");
+		}
+		case 739: {
+			strcopy(buffer, size, "The Lollichop");
+		}
+		case 813: {
+			strcopy(buffer, size, "Neon Annihilator");
+		}
+		case 834: {
+			strcopy(buffer, size, "Neon Annihilator (Genuine)");
+		}
+		case 1000: {
+			strcopy(buffer, size, "The Festive Axtinguisher");
+		}
+		case 1181: {
+			strcopy(buffer, size, "Hot Hand");
+		}
+		
+		//Demoman Primary
+		case 19: {
+			strcopy(buffer, size, "Grenade Launcher");
+		}
+		case 206: {
+			strcopy(buffer, size, "Grenade Launcher (Renamed/Strange)");
+		}
+		case 308: {
+			strcopy(buffer, size, "The Loch-n-Load");
+		}
+		case 405: {
+			strcopy(buffer, size, "Ali Baba's Wee Booties");
+		}
+		case 608: {
+			strcopy(buffer, size, "The Bootlegger");
+		}
+		case 996: {
+			strcopy(buffer, size, "The Loose Cannon");
+		}
+		case 1007: {
+			strcopy(buffer, size, "Festive Grenade Launcher");
+		}
+		case 1151: {
+			strcopy(buffer, size, "The Iron Bomber");
+		}
+		case 15077: {
+			strcopy(buffer, size, "Autumn");
+		}
+		case 15079: {
+			strcopy(buffer, size, "Macabre Web");
+		}
+		case 15091: {
+			strcopy(buffer, size, "Rainbow");
+		}
+		case 15092: {
+			strcopy(buffer, size, "Sweet Dreams");
+		}
+		case 15116: {
+			strcopy(buffer, size, "Coffin Nail");
+		}
+		case 15117: {
+			strcopy(buffer, size, "Top Shelf");
+		}
+		case 15142: {
+			strcopy(buffer, size, "Warhawk");
+		}
+		case 15158: {
+			strcopy(buffer, size, "Butcher Bird");
+		}
+		
+		//Demoman Secondary
+		case 20: {
+			strcopy(buffer, size, "Stickybomb Launcher");
+		}
+		case 207: {
+			strcopy(buffer, size, "Stickybomb Launcher (Renamed/Strange)");
+		}
+		case 130: {
+			strcopy(buffer, size, "The Scottish Resistance");
+		}
+		case 131: {
+			strcopy(buffer, size, "The Chargin' Targe");
+		}
+		case 265: {
+			strcopy(buffer, size, "Sticky Jumper");
+		}
+		case 406: {
+			strcopy(buffer, size, "The Splendid Screen");
+		}
+		case 661: {
+			strcopy(buffer, size, "Festive Stickybomb Launcher");
+		}
+		case 797: {
+			strcopy(buffer, size, "Silver Botkiller Stickybomb Launcher Mk.I");
+		}
+		case 806: {
+			strcopy(buffer, size, "Gold Botkiller Stickybomb Launcher Mk.I");
+		}
+		case 886: {
+			strcopy(buffer, size, "Rust Botkiller Stickybomb Launcher Mk.I");
+		}
+		case 895: {
+			strcopy(buffer, size, "Blood Botkiller Stickybomb Launcher Mk.I");
+		}
+		case 904: {
+			strcopy(buffer, size, "Carbonado Botkiller Stickybomb Launcher Mk.I");
+		}
+		case 913: {
+			strcopy(buffer, size, "Diamond Botkiller Stickybomb Launcher Mk.I");
+		}
+		case 962: {
+			strcopy(buffer, size, "Silver Botkiller Stickybomb Launcher Mk.II");
+		}
+		case 971: {
+			strcopy(buffer, size, "Gold Botkiller Stickybomb Launcher Mk.II");
+		}
+		case 1099: {
+			strcopy(buffer, size, "The Tide Turner");
+		}
+		case 1144: {
+			strcopy(buffer, size, "Festive Targe");
+		}
+		case 1150: {
+			strcopy(buffer, size, "The Quickiebomb Launcher");
+		}
+		case 15009: {
+			strcopy(buffer, size, "Sudden Flurry");
+		}
+		case 15012: {
+			strcopy(buffer, size, "Carpet Bomber");
+		}
+		case 15024: {
+			strcopy(buffer, size, "Blasted Bombardier");
+		}
+		case 15038: {
+			strcopy(buffer, size, "Rooftop Wrangler");
+		}
+		case 15045: {
+			strcopy(buffer, size, "Liquid Asset");
+		}
+		case 15048: {
+			strcopy(buffer, size, "Pink Elephant");
+		}
+		case 15082: {
+			strcopy(buffer, size, "Autumn");
+		}
+		case 15083: {
+			strcopy(buffer, size, "Pumpkin Patch");
+		}
+		case 15084: {
+			strcopy(buffer, size, "Macabre Web");
+		}
+		case 15113: {
+			strcopy(buffer, size, "Sweet Dreams");
+		}
+		case 15137: {
+			strcopy(buffer, size, "Coffin Nail");
+		}
+		case 15138: {
+			strcopy(buffer, size, "Dressed to Kill");
+		}
+		case 15155: {
+			strcopy(buffer, size, "Blitzkrieg");
+		}
+		
+		//Demoman Melee
+		case 1: {
+			strcopy(buffer, size, "Bottle");
+		}
+		case 191: {
+			strcopy(buffer, size, "Bottle (Renamed/Strange)");
+		}
+		case 132: {
+			strcopy(buffer, size, "The Eyelander");
+		}
+		case 172: {
+			strcopy(buffer, size, "The Scotsman's Skullcutter");
+		}
+		case 266: {
+			strcopy(buffer, size, "Horseless Headless Horsemann's Headtaker");
+		}
+		case 307: {
+			strcopy(buffer, size, "Ullapool Caber");
+		}
+		case 327: {
+			strcopy(buffer, size, "The Claidheamh Mòr");
+		}
+		case 404: {
+			strcopy(buffer, size, "The Persian Persuader");
+		}
+		case 482: {
+			strcopy(buffer, size, "Nessie's Nine Iron");
+		}
+		case 609: {
+			strcopy(buffer, size, "The Scottish Handshake");
+		}
+		case 1082: {
+			strcopy(buffer, size, "Festive Eyelander");
+		}
+		
+		//Heavy Primary
+		case 15: {
+			strcopy(buffer, size, "Minigun");
+		}
+		case 202: {
+			strcopy(buffer, size, "Minigun (Renamed/Strange)");
+		}
+		case 41: {
+			strcopy(buffer, size, "Natascha");
+		}
+		case 298: {
+			strcopy(buffer, size, "Iron Curtain");
+		}
+		case 312: {
+			strcopy(buffer, size, "The Brass Beast");
+		}
+		case 424: {
+			strcopy(buffer, size, "Tomislav");
+		}
+		case 654: {
+			strcopy(buffer, size, "Festive Minigun");
+		}
+		case 793: {
+			strcopy(buffer, size, "Silver Botkiller Minigun Mk.I");
+		}
+		case 802: {
+			strcopy(buffer, size, "Gold Botkiller Minigun Mk.I");
+		}
+		case 811: {
+			strcopy(buffer, size, "The Huo-Long Heater");
+		}
+		case 832: {
+			strcopy(buffer, size, "The Huo-Long Heater (Genuine)");
+		}
+		case 850: {
+			strcopy(buffer, size, "Deflector (MvM only?)");
+		}
+		case 882: {
+			strcopy(buffer, size, "Rust Botkiller Minigun Mk.I");
+		}
+		case 891: {
+			strcopy(buffer, size, "Blood Botkiller Minigun Mk.I");
+		}
+		case 900: {
+			strcopy(buffer, size, "Carbonado Botkiller Minigun Mk.I");
+		}
+		case 909: {
+			strcopy(buffer, size, "Diamond Botkiller Minigun Mk.I");
+		}
+		case 958: {
+			strcopy(buffer, size, "Silver Botkiller Minigun Mk.II");
+		}
+		case 967: {
+			strcopy(buffer, size, "Gold Botkiller Minigun Mk.II");
+		}
+		case 15004: {
+			strcopy(buffer, size, "King of the Jungle");
+		}
+		case 15020: {
+			strcopy(buffer, size, "Iron Wood");
+		}
+		case 15026: {
+			strcopy(buffer, size, "Antique Annihilator");
+		}
+		case 15031: {
+			strcopy(buffer, size, "War Room");
+		}
+		case 15040: {
+			strcopy(buffer, size, "Citizen Pain");
+		}
+		case 15055: {
+			strcopy(buffer, size, "Brick House");
+		}
+		case 15086: {
+			strcopy(buffer, size, "Macabre Web");
+		}
+		case 15087: {
+			strcopy(buffer, size, "Pumpkin Patch");
+		}
+		case 15088: {
+			strcopy(buffer, size, "Nutcracker");
+		}
+		case 15098: {
+			strcopy(buffer, size, "Brain Candy");
+		}
+		case 15099: {
+			strcopy(buffer, size, "Mister Cuddles");
+		}
+		case 15124: {
+			strcopy(buffer, size, "Dressed to Kill");
+		}
+		case 15125: {
+			strcopy(buffer, size, "Top Shelf");
+		}
+		case 15147: {
+			strcopy(buffer, size, "Butcher Bird");
+		}
+
+		//Heavy Secondary
+		case 11: {
+			strcopy(buffer, size, "Heavy's Shotgun");
+		}
+		case 42: {
+			strcopy(buffer, size, "Sandvich");
+		}
+		case 159: {
+			strcopy(buffer, size, "The Dalokohs Bar");
+		}
+		case 311: {
+			strcopy(buffer, size, "The Buffalo Steak Sandvich");
+		}
+		case 425: {
+			strcopy(buffer, size, "The Family Business");
+		}
+		case 433: {
+			strcopy(buffer, size, "Fishcake");
+		}
+		case 863: {
+			strcopy(buffer, size, "Robo-Sandvich");
+		}
+		case 1002: {
+			strcopy(buffer, size, "Festive Sandvich");
+		}
+		
+		//Heavy Melee
+		case 5: {
+			strcopy(buffer, size, "Fists");
+		}
+		case 195: {
+			strcopy(buffer, size, "Fists (Renamed/Strange)");
+		}
+		case 43: {
+			strcopy(buffer, size, "The Killing Gloves of Boxing");
+		}
+		case 239: {
+			strcopy(buffer, size, "Gloves of Running Urgently");
+		}
+		case 310: {
+			strcopy(buffer, size, "Warrior's Spirit");
+		}
+		case 331: {
+			strcopy(buffer, size, "Fists of Steel");
+		}
+		case 426: {
+			strcopy(buffer, size, "The Eviction Notice");
+		}
+		case 587: {
+			strcopy(buffer, size, "Apoco-Fists");
+		}
+		case 656: {
+			strcopy(buffer, size, "The Holiday Punch");
+		}
+		case 1084: {
+			strcopy(buffer, size, "Festive Gloves of Running Urgently (G.R.U.)");
+		}
+		case 1100: {
+			strcopy(buffer, size, "The Bread Bite");
+		}
+		case 1184: {
+			strcopy(buffer, size, "Gloves of Running Urgently MvM");
+		}
+		
+		//Engineer Primary
+		case 9: {
+			strcopy(buffer, size, "Engineer's Shotgun");
+		}
+		case 141: {
+			strcopy(buffer, size, "The Frontier Justice");
+		}
+		case 527: {
+			strcopy(buffer, size, "The Widowmaker");
+		}
+		case 588: {
+			strcopy(buffer, size, "The Pomson 6000");
+		}
+		case 997: {
+			strcopy(buffer, size, "The Rescue Ranger");
+		}
+		case 1004: {
+			strcopy(buffer, size, "Festive Frontier Justice");
+		}
+		
+		//Engineer Secondary
+		case 22: {
+			strcopy(buffer, size, "Engineer's Pistol");
+		}
+		case 140: {
+			strcopy(buffer, size, "The Wrangler");
+		}
+		case 528: {
+			strcopy(buffer, size, "The Short Circuit");
+		}
+		case 1086: {
+			strcopy(buffer, size, "Festive Wrangler");
+		}
+		case 30668: {
+			strcopy(buffer, size, "The Gigar Counter");
+		}
+		
+		//Engineer Melee
+		case 7: {
+			strcopy(buffer, size, "Wrench");
+		}
+		case 197: {
+			strcopy(buffer, size, "Wrench (Renamed/Strange)");
+		}
+		case 142: {
+			strcopy(buffer, size, "The Gunslinger");
+		}
+		case 155: {
+			strcopy(buffer, size, "The Southern Hospitality");
+		}
+		case 169: {
+			strcopy(buffer, size, "Golden Wrench");
+		}
+		case 329: {
+			strcopy(buffer, size, "The Jag");
+		}
+		case 589: {
+			strcopy(buffer, size, "The Eureka Effect");
+		}
+		case 662: {
+			strcopy(buffer, size, "Festive Wrench");
+		}
+		case 795: {
+			strcopy(buffer, size, "Silver Botkiller Wrench Mk.I");
+		}
+		case 804: {
+			strcopy(buffer, size, "Gold Botkiller Wrench Mk.I");
+		}
+		case 884: {
+			strcopy(buffer, size, "Rust Botkiller Wrench Mk.I");
+		}
+		case 893: {
+			strcopy(buffer, size, "Blood Botkiller Wrench Mk.I");
+		}
+		case 902: {
+			strcopy(buffer, size, "Carbonado Botkiller Wrench Mk.I");
+		}
+		case 911: {
+			strcopy(buffer, size, "Diamond Botkiller Wrench Mk.I");
+		}
+		case 960: {
+			strcopy(buffer, size, "Silver Botkiller Wrench Mk.II");
+		}
+		case 969: {
+			strcopy(buffer, size, "Gold Botkiller Wrench Mk.II");
+		}
+		case 15073: {
+			strcopy(buffer, size, "Nutcracker");
+		}
+		case 15074: {
+			strcopy(buffer, size, "Autumn");
+		}
+		case 15075: {
+			strcopy(buffer, size, "Boneyard");
+		}
+		case 15139: {
+			strcopy(buffer, size, "Dressed to Kill");
+		}
+		case 15140: {
+			strcopy(buffer, size, "Top Shelf");
+		}
+		case 15114: {
+			strcopy(buffer, size, "Torqued to Hell");
+		}
+		case 15156: {
+			strcopy(buffer, size, "Airwolf");
+		}
+		
+		//Medic Primary
+		case 17: {
+			strcopy(buffer, size, "Syringe Gun");
+		}
+		case 204: {
+			strcopy(buffer, size, "Syringe Gun (Renamed/Strange)");
+		}
+		case 36: {
+			strcopy(buffer, size, "The Blutsauger");
+		}
+		case 305: {
+			strcopy(buffer, size, "Crusader's Crossbow");
+		}
+		case 412: {
+			strcopy(buffer, size, "The Overdose");
+		}
+		case 1079: {
+			strcopy(buffer, size, "Festive Crusader's Crossbow");
+		}
+		
+		//Medic Secondary
+		case 29: {
+			strcopy(buffer, size, "Medi Gun");
+		}
+		case 211: {
+			strcopy(buffer, size, "Medi Gun(Renamed/Strange)");
+		}
+		case 35: {
+			strcopy(buffer, size, "The Kritzkrieg");
+		}
+		case 411: {
+			strcopy(buffer, size, "The Quick-Fix");
+		}
+		case 663: {
+			strcopy(buffer, size, "Festive Medi Gun");
+		}
+		case 796: {
+			strcopy(buffer, size, "Silver Botkiller Medi Gun Mk.I");
+		}
+		case 805: {
+			strcopy(buffer, size, "Gold Botkiller Medi Gun Mk.I");
+		}
+		case 885: {
+			strcopy(buffer, size, "Rust Botkiller Medi Gun Mk.I");
+		}
+		case 894: {
+			strcopy(buffer, size, "Blood Botkiller Medi Gun Mk.I");
+		}
+		case 903: {
+			strcopy(buffer, size, "Carbonado Botkiller Medi Gun Mk.I");
+		}
+		case 912: {
+			strcopy(buffer, size, "Diamond Botkiller Medi Gun Mk.I");
+		}
+		case 961: {
+			strcopy(buffer, size, "Silver Botkiller Medi Gun Mk.II");
+		}
+		case 970: {
+			strcopy(buffer, size, "Gold Botkiller Medi Gun Mk.II");
+		}
+		case 998: {
+			strcopy(buffer, size, "The Vaccinator");
+		}
+		case 15008: {
+			strcopy(buffer, size, "Masked Mender");
+		}
+		case 15010: {
+			strcopy(buffer, size, "Wrapped Reviver");
+		}
+		case 15025: {
+			strcopy(buffer, size, "Reclaimed Reanimator");
+		}
+		case 15039: {
+			strcopy(buffer, size, "Civil Servant");
+		}
+		case 15050: {
+			strcopy(buffer, size, "Spark of Life");
+		}
+		case 15078: {
+			strcopy(buffer, size, "Wildwood");
+		}
+		case 15097: {
+			strcopy(buffer, size, "Flower Power");
+		}
+		case 15121: {
+			strcopy(buffer, size, "Dressed To Kill");
+		}
+		case 15122: {
+			strcopy(buffer, size, "High Roller's");
+		}
+		case 15145: {
+			strcopy(buffer, size, "Blitzkrieg");
+		}
+		case 15146: {
+			strcopy(buffer, size, "Corsair");
+		}
+		
+		//Medic Melee
+		case 8: {
+			strcopy(buffer, size, "Bonesaw");
+		}
+		case 198: {
+			strcopy(buffer, size, "Bonesaw (Renamed/Strange)");
+		}
+		case 37: {
+			strcopy(buffer, size, "The Ubersaw");
+		}
+		case 173: {
+			strcopy(buffer, size, "The Vita-Saw");
+		}
+		case 304: {
+			strcopy(buffer, size, "Amputator");
+		}
+		case 413: {
+			strcopy(buffer, size, "The Solemn Vow");
+		}
+		case 1003: {
+			strcopy(buffer, size, "Festive Ubersaw");
+		}
+		case 1143: {
+			strcopy(buffer, size, "Festive Bonesaw");
+		}
+		
+		//Sniper Primary
+		case 14: {
+			strcopy(buffer, size, "Sniper Rifle");
+		}
+		case 201: {
+			strcopy(buffer, size, "Sniper Rifle (Renamed/Strange)");
+		}
+		case 56: {
+			strcopy(buffer, size, "The Huntsman");
+		}
+		case 230: {
+			strcopy(buffer, size, "The Sydney Sleeper");
+		}
+		case 402: {
+			strcopy(buffer, size, "The Bazaar Bargain");
+		}
+		case 526: {
+			strcopy(buffer, size, "The Machina");
+		}
+		case 664: {
+			strcopy(buffer, size, "Festive Sniper Rifle");
+		}
+		case 752: {
+			strcopy(buffer, size, "The Hitman's Heatmaker");
+		}
+		case 792: {
+			strcopy(buffer, size, "Silver Botkiller Sniper Rifle Mk.I");
+		}
+		case 801: {
+			strcopy(buffer, size, "Gold Botkiller Sniper Rifle Mk.I");
+		}
+		case 851: {
+			strcopy(buffer, size, "The AWPer Hand");
+		}
+		case 881: {
+			strcopy(buffer, size, "Rust Botkiller Sniper Rifle Mk.I");
+		}
+		case 890: {
+			strcopy(buffer, size, "Blood Botkiller Sniper Rifle Mk.I");
+		}
+		case 899: {
+			strcopy(buffer, size, "Carbonado Botkiller Sniper Rifle Mk.I");
+		}
+		case 908: {
+			strcopy(buffer, size, "Diamond Botkiller Sniper Rifle Mk.I");
+		}
+		case 957: {
+			strcopy(buffer, size, "Silver Botkiller Sniper Rifle Mk.II");
+		}
+		case 966: {
+			strcopy(buffer, size, "Gold Botkiller Sniper Rifle Mk.II");
+		}
+		case 1005: {
+			strcopy(buffer, size, "Festive Huntsman");
+		}
+		case 1092: {
+			strcopy(buffer, size, "The Fortified Compound");
+		}
+		case 1098: {
+			strcopy(buffer, size, "The Classic");
+		}
+		case 15000: {
+			strcopy(buffer, size, "Night Owl");
+		}
+		case 15007: {
+			strcopy(buffer, size, "Purple Range");
+		}
+		case 15019: {
+			strcopy(buffer, size, "Lumber From Down Under");
+		}
+		case 15023: {
+			strcopy(buffer, size, "Shot in the Dark");
+		}
+		case 15033: {
+			strcopy(buffer, size, "Bogtrotter");
+		}
+		case 15059: {
+			strcopy(buffer, size, "Thunderbolt");
+		}
+		case 15070: {
+			strcopy(buffer, size, "Pumpkin Patch");
+		}
+		case 15071: {
+			strcopy(buffer, size, "Boneyard");
+		}
+		case 15072: {
+			strcopy(buffer, size, "Wildwood");
+		}
+		case 15111: {
+			strcopy(buffer, size, "Balloonicorn");
+		}
+		case 15112: {
+			strcopy(buffer, size, "Rainbow");
+		}
+		case 15135: {
+			strcopy(buffer, size, "Coffin Nail");
+		}
+		case 15136: {
+			strcopy(buffer, size, "Dressed to Kill");
+		}
+		case 15154: {
+			strcopy(buffer, size, "Airwolf");
+		}
+		case 30665: {
+			strcopy(buffer, size, "Shooting Star");
+		}
+		
+		//Sniper Secondary
+		case 16: {
+			strcopy(buffer, size, "SMG");
+		}
+		case 203: {
+			strcopy(buffer, size, "SMG (Renamed/Strange)");
+		}
+		case 57: {
+			strcopy(buffer, size, "The Razorback");
+		}
+		case 58: {
+			strcopy(buffer, size, "Jarate");
+		}
+		case 231: {
+			strcopy(buffer, size, "Darwin's Danger Shield");
+		}
+		case 642: {
+			strcopy(buffer, size, "Cozy Camper");
+		}
+		case 751: {
+			strcopy(buffer, size, "The Cleaner's Carbine");
+		}
+		case 1083: {
+			strcopy(buffer, size, "Festive Jarate");
+		}
+		case 1105: {
+			strcopy(buffer, size, "The Self-Aware Beauty Mark");
+		}
+		case 1149: {
+			strcopy(buffer, size, "Festive SMG");
+		}
+		case 15001: {
+			strcopy(buffer, size, "Woodsy Widowmaker");
+		}
+		case 15022: {
+			strcopy(buffer, size, "Plaid Potshotter");
+		}
+		case 15032: {
+			strcopy(buffer, size, "Treadplate Tormenter");
+		}
+		case 15037: {
+			strcopy(buffer, size, "Team Sprayer");
+		}
+		case 15058: {
+			strcopy(buffer, size, "Low Profile");
+		}
+		case 15076: {
+			strcopy(buffer, size, "Wildwood");
+		}
+		case 15110: {
+			strcopy(buffer, size, "Blue Mew");
+		}
+		case 15134: {
+			strcopy(buffer, size, "High Roller's");
+		}
+		case 15153: {
+			strcopy(buffer, size, "Blitzkrieg");
+		}
+		
+		//Sniper Melee
+		case 3: {
+			strcopy(buffer, size, "Kukri");
+		}
+		case 193: {
+			strcopy(buffer, size, "Kukri (Renamed/Strange)");
+		}
+		case 171: {
+			strcopy(buffer, size, "The Tribalman's Shiv");
+		}
+		case 232: {
+			strcopy(buffer, size, "The Bushwacka");
+		}
+		case 401: {
+			strcopy(buffer, size, "The Shahanshah");
+		}
+		
+		//Spy Primary
+		case 24: {
+			strcopy(buffer, size, "Revolver");
+		}
+		case 210: {
+			strcopy(buffer, size, "Revolver (Renamed/Strange)");
+		}
+		case 61: {
+			strcopy(buffer, size, "The Ambassador");
+		}
+		case 161: {
+			strcopy(buffer, size, "Big Kill");
+		}
+		case 224: {
+			strcopy(buffer, size, "L'Etranger");
+		}
+		case 460: {
+			strcopy(buffer, size, "The Enforcer");
+		}
+		case 525: {
+			strcopy(buffer, size, "The Diamondback");
+		}
+		case 1006: {
+			strcopy(buffer, size, "Festive Ambassador");
+		}
+		case 1142: {
+			strcopy(buffer, size, "Festive Revolver");
+		}
+		case 15011: {
+			strcopy(buffer, size, "Psychedelic Slugger");
+		}
+		case 15027: {
+			strcopy(buffer, size, "Old Country");
+		}
+		case 15042: {
+			strcopy(buffer, size, "Mayor");
+		}
+		case 15051: {
+			strcopy(buffer, size, "Dead Reckoner");
+		}
+		case 15063: {
+			strcopy(buffer, size, "Wildwood");
+		}
+		case 15064: {
+			strcopy(buffer, size, "Macabre Web");
+		}
+		case 15103: {
+			strcopy(buffer, size, "Flower Power");
+		}
+		case 15128: {
+			strcopy(buffer, size, "Top Shelf");
+		}
+		case 15149: {
+			strcopy(buffer, size, "Blitzkrieg");
+		}
+		
+		//Spy Secondary
+		case 735: {
+			strcopy(buffer, size, "Sapper");
+		}
+		case 736: {
+			strcopy(buffer, size, "Sapper (Renamed/Strange)");
+		}
+		case 810: {
+			strcopy(buffer, size, "The Red-Tape Recorder");
+		}
+		case 831: {
+			strcopy(buffer, size, "The Red-Tape Recorder (Genuine)");
+		}
+		case 933: {
+			strcopy(buffer, size, "The Ap-Sap (Genuine)");
+		}
+		case 1080: {
+			strcopy(buffer, size, "Festive Sapper");
+		}
+		case 1102: {
+			strcopy(buffer, size, "The Snack Attack");
+		}
+		
+		//Spy Melee
+		case 4: {
+			strcopy(buffer, size, "Knife");
+		}
+		case 194: {
+			strcopy(buffer, size, "Knife (Renamed/Strange)");
+		}
+		case 225: {
+			strcopy(buffer, size, "Your Eternal Reward");
+		}
+		case 356: {
+			strcopy(buffer, size, "Conniver's Kunai");
+		}
+		case 461: {
+			strcopy(buffer, size, "The Big Earner");
+		}
+		case 574: {
+			strcopy(buffer, size, "The Wanga Prick");
+		}
+		case 638: {
+			strcopy(buffer, size, "The Sharp Dresser");
+		}
+		case 649: {
+			strcopy(buffer, size, "The Spy-cicle");
+		}
+		case 665: {
+			strcopy(buffer, size, "Festive Knife");
+		}
+		case 727: {
+			strcopy(buffer, size, "The Black Rose");
+		}
+		case 794: {
+			strcopy(buffer, size, "Silver Botkiller Knife Mk.I");
+		}
+		case 803: {
+			strcopy(buffer, size, "Gold Botkiller Knife Mk.I");
+		}
+		case 883: {
+			strcopy(buffer, size, "Rust Botkiller Knife Mk.I");
+		}
+		case 892: {
+			strcopy(buffer, size, "Blood Botkiller Knife Mk.I");
+		}
+		case 901: {
+			strcopy(buffer, size, "Carbonado Botkiller Knife Mk.I");
+		}
+		case 910: {
+			strcopy(buffer, size, "Diamond Botkiller Knife Mk.I");
+		}
+		case 959: {
+			strcopy(buffer, size, "Silver Botkiller Knife Mk.II");
+		}
+		case 968: {
+			strcopy(buffer, size, "Gold Botkiller Knife Mk.II");
+		}
+		case 15062: {
+			strcopy(buffer, size, "Boneyard");
+		}
+		case 15094: {
+			strcopy(buffer, size, "Blue Mew");
+		}
+		case 15095: {
+			strcopy(buffer, size, "Brain Candy");
+		}
+		case 15096: {
+			strcopy(buffer, size, "Stabbed to Hell");
+		}
+		case 15118: {
+			strcopy(buffer, size, "Dressed to Kill");
+		}
+		case 15119: {
+			strcopy(buffer, size, "Top Shelf");
+		}
+		case 15143: {
+			strcopy(buffer, size, "Blitzkrieg");
+		}
+		case 15144: {
+			strcopy(buffer, size, "Airwolf");
+		}
+	}
+}
+
 stock int TF2_GetFestiveEquivalent(int index) {
 	switch (index) {
 		case 13: {
@@ -3544,7 +5090,7 @@ stock bool TF2_RemoveCash(int client, int value) {
 	return true;
 }
 
-stock void TF2_CreateAnnotation(int client, float origin[3], const char text[], float lifetime = 10.0, const char[] sound = "vo/null.wav") {
+stock void TF2_CreateAnnotation(int client, float origin[3], const char[] text, float lifetime = 10.0, const char[] sound = "vo/null.wav") {
 	if (!IsClientInGame(client)) {
 		return;
 	}
@@ -3654,3 +5200,4 @@ stock void TF2_ParticleById(int stridx, float origin[3], int entity = -1, float 
 	TE_WriteNum("m_bResetParticles", resetparticles);
 	TE_SendToAll();
 }
+
