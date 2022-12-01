@@ -2549,11 +2549,11 @@ stock void GetAbsBoundingBox(int ent, float mins[3], float maxs[3], bool half = 
 	}
 }
 
-stock void GetWorldMins(float[3] mins) {
+stock void GetWorldMins(float mins[3]) {
 	GetEntPropVector(0, Prop_Data, "m_WorldMins", mins);
 }
 
-stock void GetWorldMaxs(float[3] maxs) {
+stock void GetWorldMaxs(float maxs[3]) {
 	GetEntPropVector(0, Prop_Data, "m_WorldMaxs", maxs);
 }
 
@@ -2840,47 +2840,47 @@ stock void ClearEntityParent(int entity) {
 	AcceptEntityInput(entity, "ClearParent");
 }
 
-stock void GetEntityOrigin(int entity, float[3] origin) {
+stock void GetEntityOrigin(int entity, float origin[3]) {
 	GetEntPropVector(entity, Prop_Send, "m_vecOrigin", origin);
 }
 
-stock void GetEntityAbsOrigin(int entity, float[3] origin) {
+stock void GetEntityAbsOrigin(int entity, float origin[3]) {
 	GetEntPropVector(entity, Prop_Send, "m_vecAbsOrigin", origin);
 }
 
-stock void GetEntityAngles(int entity, float[3] angles) {
+stock void GetEntityAngles(int entity, float angles[3]) {
 	GetEntPropVector(entity, Prop_Send, "m_angRotation", angles);
 }
 
-stock void SetEntityAngle(int entity, float[3] angles) {
+stock void SetEntityAngle(int entity, float angles[3]) {
 	SetEntPropVector(entity, Prop_Send, "m_angRotation", angles);
 }
 
-stock void GetEntityAbsAngle(int entity, float[3] angles) {
+stock void GetEntityAbsAngle(int entity, float angles[3]) {
 	GetEntPropVector(entity, Prop_Send, "m_angAbsRotation", angles);
 }
 
-stock void GetEntityVelocity(int entity, float[3] velocity) {
+stock void GetEntityVelocity(int entity, float velocity[3]) {
 	GetEntPropVector(entity, Prop_Data, "m_vecVelocity", velocity);
 }
 
-stock void SetEntityVelocity(int entity, float[3] velocity) {
+stock void SetEntityVelocity(int entity, float velocity[3]) {
 	SetEntPropVector(entity, Prop_Data, "m_vecVelocity", velocity);
 }
 
-stock void GetEntityAbsVelocity(int entity, float[3] velocity) {
+stock void GetEntityAbsVelocity(int entity, float velocity[3]) {
 	GetEntPropVector(entity, Prop_Send, "m_vecAbsVelocity", velocity);
 }
 
-stock void SetEntityAbsVelocity(int entity, float[3] velocity) {
+stock void SetEntityAbsVelocity(int entity, float velocity[3]) {
 	SetEntPropVector(entity, Prop_Send, "m_vecAbsVelocity", velocity);
 }
 
-stock void GetEntityMins(int entity, float[3] mins) {
+stock void GetEntityMins(int entity, float mins[3]) {
 	GetEntPropVector(entity, Prop_Send, "m_vecMins", mins);
 }
 
-stock void GetEntityMaxs(int entity, float[3] maxs) {
+stock void GetEntityMaxs(int entity, float maxs[3]) {
 	GetEntPropVector(entity, Prop_Send, "m_vecMaxs", maxs);
 }
 
@@ -3654,7 +3654,7 @@ stock int GetCmdArgTargetEx(int client, int argnum, bool nobots = false, bool im
 /*---------------------------------------------------------*/
 //DATAPACKS
 
-stock void WritePackVector(DataPack pack, float[3] vector) {
+stock void WritePackVector(DataPack pack, float vector[3]) {
 	pack.WriteFloat(vector[0]);
 	pack.WriteFloat(vector[1]);
 	pack.WriteFloat(vector[2]);
