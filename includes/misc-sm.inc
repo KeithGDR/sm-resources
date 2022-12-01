@@ -2823,9 +2823,10 @@ stock int GetEntityOwner(int entity) {
 	return GetEntPropEnt(entity, Prop_Data, "m_hOwnerEntity");
 }
 
-stock void SetEntityOwner(int entity, int value) {
-	SetEntPropEnt(entity, Prop_Data, "m_hOwnerEntity", value);
-}
+//Deprecated as of Sourcemod 1.11
+// stock void SetEntityOwner(int entity, int value) {
+// 	SetEntPropEnt(entity, Prop_Data, "m_hOwnerEntity", value);
+// }
 
 stock int GetEntityThrower(int entity) {
 	return GetEntPropEnt(entity, Prop_Data, "m_hThrower");
@@ -2953,11 +2954,12 @@ stock void SetEntityWaterlevel(int entity, int value) {
 	SetEntProp(entity, Prop_Data, "m_nWaterLevel", value);
 }
 
-stock bool DispatchKeyValueInt(int entity, const char[] keyName, const int value) {
-	char sValue[64];
-	IntToString(value, sValue, sizeof(sValue));
-	return DispatchKeyValue(entity, keyName, sValue);
-}
+//Deprecated as of Sourcemod 1.11
+// stock bool DispatchKeyValueInt(int entity, const char[] keyName, const int value) {
+// 	char sValue[64];
+// 	IntToString(value, sValue, sizeof(sValue));
+// 	return DispatchKeyValue(entity, keyName, sValue);
+// }
 
 stock bool GetEntPropBool(int entity, PropType type, const char[] prop, int size = 4, int element = 0) {
 	return view_as<bool>(GetEntProp(entity, type, prop, size, element));
@@ -3610,9 +3612,10 @@ stock CollisionGroup GetEntityCollisionGroup(int entity) {
  * @param group		CollisionGroup value.
  * @error			Invalid entity index, or lack of mod compliance.
  */
-stock void SetEntityCollisionGroup(int entity, CollisionGroup group) {
-	SetEntProp(entity, Prop_Data, "m_CollisionGroup", group);
-}
+//Deprecated as of Sourcemod 1.11
+// stock void SetEntityCollisionGroup(int entity, CollisionGroup group) {
+// 	SetEntProp(entity, Prop_Data, "m_CollisionGroup", group);
+// }
 
 /*---------------------------------------------------------*/
 //COMMANDS
@@ -3621,17 +3624,19 @@ stock void GetCommandName(char[] buffer, int size) {
 	GetCmdArg(0, buffer, size);
 }
 
-stock int GetCmdArgInt(int argnum) {
-	char sBuffer[64];
-	GetCmdArg(argnum, sBuffer, sizeof(sBuffer));
-	return StringToInt(sBuffer);
-}
+//Deprecated as of Sourcemod 1.11
+// stock int GetCmdArgInt(int argnum) {
+// 	char sBuffer[64];
+// 	GetCmdArg(argnum, sBuffer, sizeof(sBuffer));
+// 	return StringToInt(sBuffer);
+// }
 
-stock float GetCmdArgFloat(int argnum) {
-	char sBuffer[64];
-	GetCmdArg(argnum, sBuffer, sizeof(sBuffer));
-	return StringToFloat(sBuffer);
-}
+//Deprecated as of Sourcemod 1.11
+// stock float GetCmdArgFloat(int argnum) {
+// 	char sBuffer[64];
+// 	GetCmdArg(argnum, sBuffer, sizeof(sBuffer));
+// 	return StringToFloat(sBuffer);
+// }
 
 stock bool GetCmdArgBool(int argnum) {
 	char sBuffer[64];
