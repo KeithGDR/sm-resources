@@ -723,7 +723,7 @@ stock bool CSGO_IsWarmup() {
 	return GameRules_GetProp("m_bWarmupPeriod");
 }
 
-stock int CSGO_GetWeaponSlot(const char[] weapon) {
+stock int CSGO_GetWeaponSlotByName(const char[] weapon) {
 	if (StrContains(weapon, "AK-47", false) != -1 || StrContains(weapon, "ak47", false) != -1) {
 		return 0;
 	} else if (StrContains(weapon, "AUG", false) != -1) {
@@ -796,5 +796,66 @@ stock int CSGO_GetWeaponSlot(const char[] weapon) {
 		return 0;
 	}
 	
+	return -1;
+}
+
+//Credits to DRANIX.
+int CSGO_GetWeaponSlotByIndex(int index) {
+	switch (index) {
+		case 9: return CS_SLOT_PRIMARY;
+		case 7: return CS_SLOT_PRIMARY;
+		case 16: return CS_SLOT_PRIMARY;
+		case 60: return CS_SLOT_PRIMARY;
+		case 1: return CS_SLOT_SECONDARY;
+		case 61: return CS_SLOT_SECONDARY;
+		case 32: return CS_SLOT_SECONDARY;
+		case 4: return CS_SLOT_SECONDARY;
+		case 2: return CS_SLOT_SECONDARY;
+		case 36: return CS_SLOT_SECONDARY;
+		case 63: return CS_SLOT_SECONDARY;
+		case 3: return CS_SLOT_SECONDARY;
+		case 30: return CS_SLOT_SECONDARY;
+		case 64: return CS_SLOT_SECONDARY;
+		case 35: return CS_SLOT_PRIMARY;
+		case 25: return CS_SLOT_PRIMARY;
+		case 27: return CS_SLOT_PRIMARY;
+		case 29: return CS_SLOT_PRIMARY;
+		case 14: return CS_SLOT_PRIMARY;
+		case 28: return CS_SLOT_PRIMARY;
+		case 34: return CS_SLOT_PRIMARY;
+		case 17: return CS_SLOT_PRIMARY;
+		case 33: return CS_SLOT_PRIMARY;
+		case 24: return CS_SLOT_PRIMARY;
+		case 19: return CS_SLOT_PRIMARY;
+		case 26: return CS_SLOT_PRIMARY;
+		case 10: return CS_SLOT_PRIMARY;
+		case 13: return CS_SLOT_PRIMARY;
+		case 40: return CS_SLOT_PRIMARY;
+		case 8: return CS_SLOT_PRIMARY;
+		case 39: return CS_SLOT_PRIMARY;
+		case 38: return CS_SLOT_PRIMARY;
+		case 11: return CS_SLOT_PRIMARY;
+		case 507: return CS_SLOT_KNIFE;
+		case 508: return CS_SLOT_KNIFE;
+		case 500: return CS_SLOT_KNIFE;
+		case 514: return CS_SLOT_KNIFE;
+		case 515: return CS_SLOT_KNIFE;
+		case 505: return CS_SLOT_KNIFE;
+		case 516: return CS_SLOT_KNIFE;
+		case 509: return CS_SLOT_KNIFE;
+		case 512: return CS_SLOT_KNIFE;
+		case 506: return CS_SLOT_KNIFE;
+		case 519: return CS_SLOT_KNIFE;
+		case 520: return CS_SLOT_KNIFE;
+		case 522: return CS_SLOT_KNIFE;
+		case 523: return CS_SLOT_KNIFE;
+		case 23: return CS_SLOT_PRIMARY;
+		case 503: return CS_SLOT_KNIFE;
+		case 517: return CS_SLOT_KNIFE;
+		case 518: return CS_SLOT_KNIFE;
+		case 521: return CS_SLOT_KNIFE;
+		case 525: return CS_SLOT_KNIFE;
+	}
+
 	return -1;
 }
