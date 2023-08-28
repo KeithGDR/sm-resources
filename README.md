@@ -8,3 +8,5 @@ The following links offer useful resources from others in the community.
 * [Resources gathered by 404](https://wiki.alliedmods.net/List_of_custom_SourceMod_includes)
 * [Karyuu-Library](https://github.com/K4ryuu/Karyuu-Library)
 * [More on AlliedModders](https://forums.alliedmods.net/forumdisplay.php?f=112)
+* [VS Code Extension by Sarrus](https://marketplace.visualstudio.com/items?itemName=Sarrus.sourcepawn-vscode)
+* [Crash Reporting by Asherkin](https://forums.alliedmods.net/showthread.php?t=277703)
