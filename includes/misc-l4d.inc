@@ -195,7 +195,7 @@ stock L4DSurvivor L4D_GetSurvivorID(const char[] name) {
 		return L4DSurvivor_Francis;
 	}
 	
-	return -1;
+	return view_as<L4DSurvivor>(-1);
 }
 
 /**
@@ -215,7 +215,7 @@ stock L4D2Survivor L4D2_GetSurvivorID(const char[] name) {
 		return L4D2Survivor_Ellis;
 	}
 	
-	return -1;
+	return view_as<L4D2Survivor>(-1);
 }
 
 /**

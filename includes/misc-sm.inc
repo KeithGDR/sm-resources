@@ -658,12 +658,6 @@ stock bool ClearTrieSafe(StringMap map) {
 	return true;
 }
 
-stock void SteamWorks_SetHTTPRequestGetOrPostParameterInt(Handle hHandle, const char[] sName, int value) {
-	char sValue[256];
-	IntToString(value, sValue, sizeof(sValue));
-	SteamWorks_SetHTTPRequestGetOrPostParameter(hHandle, sName, sValue);
-}
-
 stock float CalculateFloat(int value1, int value2, float fMultiplier = 0.0) {
 	float fValue = float(value1) / float(value2);
 
@@ -736,14 +730,36 @@ stock void StripCharactersPost(char[] buffer, int position) {
 	buffer[position] = '\0';
 }
 
-stock bool GetStringMinMax(const char[] buffer, any& min, any& max, const char[] splitter = "/", bool clamp = true) {
+stock bool GetStringMinMax(const char[] buffer, int &min, int &max, const char[] splitter = "/", bool clamp = true) {
 	char sPart[2][12];
 	if (ExplodeString(buffer, splitter, sPart, 2, 12) < 2) {
 		return false;
 	}
 
-	min = StrContains(sPart[0], ".") != -1 ? StringToFloat(sPart[0]) : StringToInt(sPart[0]);
-	max = StrContains(sPart[1], ".") != -1 ? StringToFloat(sPart[1]) : StringToInt(sPart[1]);
+	min = StringToInt(sPart[0]);
+	max = StringToInt(sPart[1]);
+
+	if (clamp) {
+		if (min > max) {
+			min = max;
+		}
+
+		if (max < min) {
+			max = min;
+		}
+	}
+
+	return true;
+}
+
+stock bool GetStringMinMaxFloats(const char[] buffer, float &min, float &max, const char[] splitter = "/", bool clamp = true) {
+	char sPart[2][12];
+	if (ExplodeString(buffer, splitter, sPart, 2, 12) < 2) {
+		return false;
+	}
+
+	min = StringToFloat(sPart[0]);
+	max = StringToFloat(sPart[1]);
 
 	if (clamp) {
 		if (min > max) {

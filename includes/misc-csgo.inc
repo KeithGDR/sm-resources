@@ -24,6 +24,8 @@
 #endif
 #define _misc_csgo_included
 
+#include <sdktools>
+
 #undef REQUIRE_EXTENSIONS
 #tryinclude <cstrike>
 #define REQUIRE_EXTENSIONS
@@ -316,7 +318,7 @@ stock void CSGO_SetHelmet(int client, bool value) {
 *	return	N/A
 **/
 stock void CSGO_ToggleHelmet(int client) {
-	bool value = GetEntProp(client, Prop_Send, "m_bHasHelmet") == true ? false : true;
+	bool value = view_as<bool>(GetEntProp(client, Prop_Send, "m_bHasHelmet")) == true ? false : true;
 	SetEntProp(client, Prop_Send, "m_bHasHelmet", value);
 }
 
@@ -328,7 +330,7 @@ stock void CSGO_ToggleHelmet(int client) {
 *	return	True or False.
 **/
 stock bool CSGO_GetHelmet(int client) {
-	return GetEntProp(client, Prop_Send, "m_bHasHelmet");
+	return view_as<bool>(GetEntProp(client, Prop_Send, "m_bHasHelmet"));
 }
 
 /**
@@ -566,28 +568,28 @@ stock float CSGO_GetPlayerSpeed(int client) {
 **/
 stock int CSGO_CreateDynamicLight(float origin[3], int color[4] = {255, 255, 255, 255}, int brightness = 10, int style = LIGHT_STYLE_NORMAL, const float radius = 32.0, const float distance = 64.0) {
 	int light = CreateEntityByName("light_dynamic");
-	
+
 	if (IsValidEntity(light)) {
 		char sColor[64];
 		FormatEx(sColor, sizeof(sColor), "%i %i %i %i", color[0], color[1], color[2], color[3]);
-        DispatchKeyValue(light, "_light", sColor);
+		DispatchKeyValue(light, "_light", sColor);
 		
 		char sBrightness[12];
 		FormatEx(sBrightness, sizeof(sBrightness), "%i", brightness);
-        DispatchKeyValue(light, "brightness", sBrightness);
+		DispatchKeyValue(light, "brightness", sBrightness);
 		
 		char sStyle[12];
 		FormatEx(sStyle, sizeof(sStyle), "%i", style);
-        DispatchKeyValue(light, "style", sStyle);
+		DispatchKeyValue(light, "style", sStyle);
 		
-        DispatchKeyValueFloat(light, "spotlight_radius", radius);
-        DispatchKeyValueFloat(light, "distance", distance);
-        DispatchSpawn(light);
-        
-        TeleportEntity(light, origin, NULL_VECTOR, NULL_VECTOR);
-        AcceptEntityInput(light, "TurnOn");
-    }
-	
+		DispatchKeyValueFloat(light, "spotlight_radius", radius);
+		DispatchKeyValueFloat(light, "distance", distance);
+		DispatchSpawn(light);
+		
+		TeleportEntity(light, origin, NULL_VECTOR, NULL_VECTOR);
+		AcceptEntityInput(light, "TurnOn");
+	}
+
 	return light;
 }
 
@@ -631,7 +633,7 @@ stock bool CSGO_SendRadioMessage(int client, int target, const char[] format, an
 	return true;
 }
 
-stock bool CSGO_SendRadioMessageAll(int client, const char[] sText, any ...) {
+stock bool CSGO_SendRadioMessageAll(int client, const char[] format, any ...) {
 	if (!IsClientInGame(client)) {
 		return false;
 	}
@@ -675,7 +677,7 @@ stock bool CSGO_SendRadioMessageAll(int client, const char[] sText, any ...) {
 	return true;
 }
 
-stock bool CSGO_SendRadioMessageTeam(int client, int team, const char[] sText, any ...) {
+stock bool CSGO_SendRadioMessageTeam(int client, int team, const char[] format, any ...) {
 	if (!IsClientInGame(client)) {
 		return false;
 	}
@@ -720,7 +722,7 @@ stock bool CSGO_SendRadioMessageTeam(int client, int team, const char[] sText, a
 }
 
 stock bool CSGO_IsWarmup() {
-	return GameRules_GetProp("m_bWarmupPeriod");
+	return view_as<bool>(GameRules_GetProp("m_bWarmupPeriod"));
 }
 
 stock int CSGO_GetWeaponSlotByName(const char[] weapon) {
@@ -800,7 +802,7 @@ stock int CSGO_GetWeaponSlotByName(const char[] weapon) {
 }
 
 //Credits to DRANIX.
-int CSGO_GetWeaponSlotByIndex(int index) {
+stock int CSGO_GetWeaponSlotByIndex(int index) {
 	switch (index) {
 		case 9: return CS_SLOT_PRIMARY;
 		case 7: return CS_SLOT_PRIMARY;
