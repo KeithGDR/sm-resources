@@ -1,0 +1,13 @@
+error
+blood_impact_red_01
+blood_impact_green_01
+blood_impact_yellow_01
+burning_character
+slime_splash_01
+slime_splash_02
+slime_splash_03
+combineball
+ash_01
+blueglow
+fire_small_01
+explosion_gas_01

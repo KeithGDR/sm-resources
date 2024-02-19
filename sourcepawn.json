@@ -130,8 +130,8 @@
 	"plugin-template": {
 		"prefix": "plugin-template",
 		"body": [
-			"#pragma newdecls required",
 			"#pragma semicolon 1",
+			"#pragma newdecls required",
 			"",
 			"#include <sourcemod>",
 			"",
